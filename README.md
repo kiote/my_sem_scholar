@@ -1,49 +1,19 @@
 # Semantic Scholar MCP Server
 
-A FastMCP server that provides access to the Semantic Scholar academic search API through Claude Desktop.
+A FastMCP server that provides access to the Semantic Scholar academic search API through Claude Code CLI.
 
-## Installation
+## Installation for Claude Code CLI
 
-1. Clone or download this repository to your local machine
-
-2. Navigate to the project directory:
-```bash
-cd path/to/my_sem_scholar
-```
-
-3. (Optional) Set up your API key for increased rate limits:
-```bash
-# Copy the example .env file
-cp .env.example .env
-
-# Edit .env and add your API key
-# Get your free API key from: https://www.semanticscholar.org/product/api
-```
-
-4. Install dependencies:
-```bash
-uv pip install -e .
-
-# For development (includes testing tools)
-uv pip install -e ".[dev]"
-```
-
-## Connecting to Claude Desktop
-
-Add this to your Claude Desktop config file:
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+Add this to your Claude Code MCP configuration file at `~/.claude/mcp_config.json`:
 
 ```json
 {
   "mcpServers": {
     "semantic-scholar": {
-      "command": "uv",
+      "command": "uvx",
       "args": [
-        "--directory",
-        "/absolute/path/to/my_sem_scholar",
-        "run",
+        "--from",
+        "git+https://github.com/kiote/my_sem_scholar.git",
         "fastmcp",
         "run",
         "server.py"
@@ -53,25 +23,35 @@ Add this to your Claude Desktop config file:
 }
 ```
 
-**Important**: Replace `/absolute/path/to/my_sem_scholar` with the actual absolute path to your installation directory.
+That's it! Claude Code will automatically install and run the server when needed.
 
-Then restart Claude Desktop:
-- **macOS/Linux**: Quit completely (Cmd+Q / Ctrl+Q) and reopen
-- **Windows**: Close and reopen the application
+### Optional: API Key Setup
 
-## Testing
-
-Run the test suite:
+For better rate limits, get a free API key from [Semantic Scholar](https://www.semanticscholar.org/product/api) and add it to your environment:
 
 ```bash
-# Run all tests
-uv run pytest
+export SEMANTIC_SCHOLAR_API_KEY=your_api_key_here
+```
 
-# Run with verbose output
+Or create a `.env` file in the project directory:
+```bash
+SEMANTIC_SCHOLAR_API_KEY=your_api_key_here
+```
+
+## Development
+
+If you want to contribute or run tests:
+
+```bash
+# Clone the repository
+git clone https://github.com/kiote/my_sem_scholar.git
+cd my_sem_scholar
+
+# Install with dev dependencies
+uv pip install -e ".[dev]"
+
+# Run tests
 uv run pytest -v
-
-# Run specific test
-uv run pytest tests/test_server.py::TestRateLimiting
 ```
 
 ## Features
