@@ -60,15 +60,15 @@ async def _wait_for_rate_limit():
 @mcp.tool()
 async def search_papers(
     query: str,
-    limit: int = 10,
-    fields: str = "title,authors,year,abstract,citationCount,url"
+    limit: int = 5,
+    fields: str = "title,authors,year,abstract,citationCount,publicationDate"
 ) -> dict:
     """
     Search for academic papers on Semantic Scholar.
 
     Args:
         query: Search query string
-        limit: Maximum number of results to return (default: 10, max: 100)
+        limit: Maximum number of results to return (default: 5, max: 100)
         fields: Comma-separated list of fields to return
 
     Returns:
