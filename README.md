@@ -2,40 +2,23 @@
 
 A FastMCP server that provides access to the Semantic Scholar academic search API through Claude Code CLI.
 
-## Installation for Claude Code CLI
+## Installation
 
-Add this to your Claude Code MCP configuration file at `~/.claude/mcp_config.json`:
+Add the MCP server using the Claude CLI:
 
-```json
-{
-  "mcpServers": {
-    "semantic-scholar": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/kiote/my_sem_scholar.git",
-        "fastmcp",
-        "run",
-        "server.py"
-      ]
-    }
-  }
-}
+```bash
+claude mcp add --transport stdio semantic-scholar -- uvx --from git+https://github.com/kiote/my_sem_scholar.git fastmcp run server.py
 ```
 
-That's it! Claude Code will automatically install and run the server when needed.
+That's it! The server will be automatically installed and configured.
 
 ### Optional: API Key Setup
 
-For better rate limits, get a free API key from [Semantic Scholar](https://www.semanticscholar.org/product/api) and add it to your environment:
+For better rate limits, get a free API key from [Semantic Scholar](https://www.semanticscholar.org/product/api):
 
 ```bash
-export SEMANTIC_SCHOLAR_API_KEY=your_api_key_here
-```
-
-Or create a `.env` file in the project directory:
-```bash
-SEMANTIC_SCHOLAR_API_KEY=your_api_key_here
+# Add with API key
+claude mcp add --transport stdio semantic-scholar --env SEMANTIC_SCHOLAR_API_KEY=your_key_here -- uvx --from git+https://github.com/kiote/my_sem_scholar.git fastmcp run server.py
 ```
 
 ## Development
